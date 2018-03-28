@@ -19,6 +19,7 @@ import com.yandex.disk.rest.json.Link;
 import com.yandex.disk.rest.json.Operation;
 import com.yandex.disk.rest.json.Resource;
 import com.yandex.disk.rest.json.ResourceList;
+import com.yandex.disk.rest.okhttp.NullBodyAwareOkClient;
 import com.yandex.disk.rest.retrofit.CloudApi;
 import com.yandex.disk.rest.retrofit.ErrorHandlerImpl;
 import com.yandex.disk.rest.retrofit.RequestInterceptorImpl;
@@ -27,14 +28,13 @@ import com.yandex.disk.rest.util.Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import retrofit.RestAdapter;
 
 public class RestClient {
 
@@ -69,7 +69,7 @@ public class RestClient {
     }
 
     this.builder = new RestAdapter.Builder()
-      .setClient(new OkClient(client))
+      .setClient(new NullBodyAwareOkClient(client))
       .setEndpoint(getUrl())
       .setRequestInterceptor(new RequestInterceptorImpl(credentials.getHeaders()))
       .setErrorHandler(new ErrorHandlerImpl())

@@ -147,6 +147,6 @@ public class MakeFolderFragment extends IODialogFragment {
       }.execute();
     }
 
-    
+
   }
 }
