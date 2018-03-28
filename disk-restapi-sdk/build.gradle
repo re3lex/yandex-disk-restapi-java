@@ -28,20 +28,16 @@ dependencies {
     testCompile 'com.google.guava:guava:22.0'
 }
 
-group = 'com.yandex.android'
-version = '1.04'
+group = 'com.lex'
+version = '1.06'
 
 
 
 uploadArchives {
     repositories {
-
-        mavenDeployer {
-            //mavenLocal()
-            def userHome = System.properties['user.home']
-            repository(url: "file:///$userHome/.m2/repository/")
+        ivy {
+            url LOCAL_IVY_REPO
         }
-
     }
 }
 
