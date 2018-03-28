@@ -1,12 +1,15 @@
 /*
-* (C) 2015 Yandex LLC (https://yandex.com/)
-*
-* The source code of Java SDK for Yandex.Disk REST API
-* is available to use under terms of Apache License,
-* Version 2.0. See the file LICENSE for the details.
-*/
+ * (C) 2015 Yandex LLC (https://yandex.com/)
+ *
+ * The source code of Java SDK for Yandex.Disk REST API
+ * is available to use under terms of Apache License,
+ * Version 2.0. See the file LICENSE for the details.
+ */
 
 package com.yandex.disk.rest.json;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -15,25 +18,34 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ApiError {
 
-    @SerializedName("description")
-    String description;
+  @SerializedName("description")
+  String description;
 
-    @SerializedName("error")
-    String error;
+  @SerializedName("error")
+  String error;
 
-    public String getDescription() {
-        return description;
+  @NonNull
+  public final static ApiError UNKNOWN = new ApiError() {
+    {
+      description = error = "unknown";
     }
+  };
 
-    public String getError() {
-        return error;
-    }
+  @Nullable
+  public String getDescription() {
+    return description;
+  }
 
-    @Override
-    public String toString() {
-        return "ApiError{" +
-                "description='" + description + '\'' +
-                ", error='" + error + '\'' +
-                '}';
-    }
+  @Nullable
+  public String getError() {
+    return error;
+  }
+
+  @Override
+  public String toString() {
+    return "ApiError{" +
+      "description='" + description + '\'' +
+      ", error='" + error + '\'' +
+      '}';
+  }
 }

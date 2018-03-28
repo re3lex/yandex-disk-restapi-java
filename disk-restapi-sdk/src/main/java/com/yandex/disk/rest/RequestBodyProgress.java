@@ -1,16 +1,16 @@
 /*
-* (C) 2015 Yandex LLC (https://yandex.com/)
-*
-* The source code of Java SDK for Yandex.Disk REST API
-* is available to use under terms of Apache License,
-* Version 2.0. See the file LICENSE for the details.
-*/
+ * (C) 2015 Yandex LLC (https://yandex.com/)
+ *
+ * The source code of Java SDK for Yandex.Disk REST API
+ * is available to use under terms of Apache License,
+ * Version 2.0. See the file LICENSE for the details.
+ */
 
 package com.yandex.disk.rest;
 
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.internal.Util;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.yandex.disk.rest.exceptions.CancelledUploadingException;
 
 import org.slf4j.Logger;
@@ -21,6 +21,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.internal.Util;
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.Okio;
@@ -35,12 +38,12 @@ import okio.Source;
     /**
      * Returns a new request body that transmits the content of {@code file}.
      * <br/>
-     * Based on {@link RequestBody#create(com.squareup.okhttp.MediaType, java.io.File)}
+     * Based on {@link RequestBody#create(MediaType, java.io.File)}
      *
      * @see RequestBody#create(com.squareup.okhttp.MediaType, java.io.File)
      */
-    /* package */ static RequestBody create(final MediaType contentType, final File file, final long startOffset,
-                              final ProgressListener listener) {
+    /* package */ static RequestBody create(@NonNull final MediaType contentType, @Nullable final File file,
+                                            final long startOffset, @Nullable final ProgressListener listener) {
         if (file == null) {
             throw new NullPointerException("content == null");
         }
@@ -52,7 +55,7 @@ import okio.Source;
         return new RequestBody() {
 
             private void updateProgress(long loaded)
-                    throws CancelledUploadingException {
+              throws CancelledUploadingException {
                 if (listener != null) {
                     if (listener.hasCancelled()) {
                         throw new CancelledUploadingException();

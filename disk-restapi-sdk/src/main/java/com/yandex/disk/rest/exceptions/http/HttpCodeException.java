@@ -1,19 +1,20 @@
 /*
-* (C) 2015 Yandex LLC (https://yandex.com/)
-*
-* The source code of Java SDK for Yandex.Disk REST API
-* is available to use under terms of Apache License,
-* Version 2.0. See the file LICENSE for the details.
-*/
+ * (C) 2015 Yandex LLC (https://yandex.com/)
+ *
+ * The source code of Java SDK for Yandex.Disk REST API
+ * is available to use under terms of Apache License,
+ * Version 2.0. See the file LICENSE for the details.
+ */
 
 package com.yandex.disk.rest.exceptions.http;
+
+import android.support.annotation.Nullable;
 
 import com.yandex.disk.rest.exceptions.ServerIOException;
 import com.yandex.disk.rest.json.ApiError;
 
 /**
  * 4xx and 5xx http codes<br/>
- * {@link retrofit.RetrofitError.Kind#HTTP}<br/>
  * <br/>
  * Basic rules:<br/>
  * Replace <tt>Error</tt> in the error name from {@link ApiError#getError()}
@@ -23,15 +24,17 @@ import com.yandex.disk.rest.json.ApiError;
 public class HttpCodeException extends ServerIOException {
 
     protected final int code;
+
+    @Nullable
     protected final ApiError response;
 
-    public HttpCodeException(int code, ApiError response) {
+    public HttpCodeException(final int code, @Nullable final ApiError response) {
         super();
         this.code = code;
         this.response = response;
     }
 
-    public HttpCodeException(int code) {
+    public HttpCodeException(final int code) {
         this(code, null);
     }
 
@@ -39,6 +42,7 @@ public class HttpCodeException extends ServerIOException {
         return code;
     }
 
+    @Nullable
     public ApiError getResponse() {
         return response;
     }
@@ -46,8 +50,8 @@ public class HttpCodeException extends ServerIOException {
     @Override
     public String toString() {
         return "HttpCodeException{" +
-                "code=" + code +
-                ", response=" + response +
-                '}';
+          "code=" + code +
+          ", response=" + response +
+          '}';
     }
 }

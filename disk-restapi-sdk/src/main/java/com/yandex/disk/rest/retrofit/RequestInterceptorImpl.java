@@ -1,35 +1,43 @@
 /*
-* (C) 2015 Yandex LLC (https://yandex.com/)
-*
-* The source code of Java SDK for Yandex.Disk REST API
-* is available to use under terms of Apache License,
-* Version 2.0. See the file LICENSE for the details.
-*/
+ * (C) 2015 Yandex LLC (https://yandex.com/)
+ *
+ * The source code of Java SDK for Yandex.Disk REST API
+ * is available to use under terms of Apache License,
+ * Version 2.0. See the file LICENSE for the details.
+ */
 
 package com.yandex.disk.rest.retrofit;
 
+import android.support.annotation.NonNull;
+
 import com.yandex.disk.rest.CustomHeader;
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 
-public class RequestInterceptorImpl implements RequestInterceptor {
+public class RequestInterceptorImpl implements Interceptor {
 
-    private final List<CustomHeader> headers;
+  @NonNull
+  private final List<CustomHeader> headers;
 
-    public RequestInterceptorImpl(final List<CustomHeader> headers) {
-        this.headers = headers;
+  public RequestInterceptorImpl(@NonNull final List<CustomHeader> headers) {
+    this.headers = headers;
+  }
+
+  @NonNull
+  @Override
+  public Response intercept(@NonNull final Chain chain) throws IOException {
+    Request original = chain.request();
+    Request.Builder builder = original.newBuilder();
+    for (CustomHeader header : headers) {
+      builder.addHeader(header.getName(), header.getValue());
     }
-
-    @Override
-    public void intercept(final RequestFacade request) {
-        for (CustomHeader header : headers) {
-            addHeader(request, header);
-        }
-    }
-
-    private static void addHeader(final RequestFacade request, final CustomHeader header) {
-        request.addHeader(header.getName(), header.getValue());
-    }
+    Request request = builder.method(original.method(), original.body())
+      .build();
+    return chain.proceed(request);
+  }
 }

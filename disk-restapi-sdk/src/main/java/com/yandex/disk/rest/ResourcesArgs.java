@@ -1,14 +1,16 @@
 /*
-* (C) 2015 Yandex LLC (https://yandex.com/)
-*
-* The source code of Java SDK for Yandex.Disk REST API
-* is available to use under terms of Apache License,
-* Version 2.0. See the file LICENSE for the details.
-*/
+ * (C) 2015 Yandex LLC (https://yandex.com/)
+ *
+ * The source code of Java SDK for Yandex.Disk REST API
+ * is available to use under terms of Apache License,
+ * Version 2.0. See the file LICENSE for the details.
+ */
 
 package com.yandex.disk.rest;
 
-import retrofit.mime.TypedOutput;
+import android.support.annotation.Nullable;
+
+import okhttp3.RequestBody;
 
 public class ResourcesArgs {
 
@@ -20,11 +22,11 @@ public class ResourcesArgs {
     private Integer limit, offset;
     private Boolean previewCrop;
     private ResourcesHandler parsingHandler;
-    private TypedOutput body;
+    private RequestBody body;
 
     private ResourcesArgs(String path, String fields, String sort, String previewSize,
                           Integer limit, Integer offset, Boolean previewCrop, String publicKey,
-                          String mediaType, TypedOutput body, ResourcesHandler parsingHandler) {
+                          String mediaType, RequestBody body, ResourcesHandler parsingHandler) {
         this.path = path;
         this.fields = fields;
         this.sort = sort;
@@ -74,10 +76,11 @@ public class ResourcesArgs {
         return previewCrop;
     }
 
-    public TypedOutput getBody() {
+    public RequestBody getBody() {
         return body;
     }
 
+    @Nullable
     public ResourcesHandler getParsingHandler() {
         return parsingHandler;
     }
@@ -85,18 +88,18 @@ public class ResourcesArgs {
     @Override
     public String toString() {
         return "ResourcesArgs{" +
-                "path='" + path + '\'' +
-                ", fields='" + fields + '\'' +
-                ", limit=" + limit +
-                ", offset=" + offset +
-                ", sort='" + sort + '\'' +
-                ", previewSize='" + previewSize + '\'' +
-                ", previewCrop=" + previewCrop +
-                ", publicKey=" + publicKey +
-                ", mediaType=" + mediaType +
-                ", body=" + body +
-                ", parsingHandler=" + (parsingHandler != null) +
-                '}';
+          "path='" + path + '\'' +
+          ", fields='" + fields + '\'' +
+          ", limit=" + limit +
+          ", offset=" + offset +
+          ", sort='" + sort + '\'' +
+          ", previewSize='" + previewSize + '\'' +
+          ", previewCrop=" + previewCrop +
+          ", publicKey=" + publicKey +
+          ", mediaType=" + mediaType +
+          ", body=" + body +
+          ", parsingHandler=" + (parsingHandler != null) +
+          '}';
     }
 
     public static class Builder {
@@ -104,11 +107,11 @@ public class ResourcesArgs {
         private Integer limit, offset;
         private Boolean previewCrop;
         private ResourcesHandler parsingHandler;
-        private TypedOutput body;
+        private RequestBody body;
 
         public ResourcesArgs build() {
             return new ResourcesArgs(path, fields, sort, previewSize, limit, offset, previewCrop,
-                    publicKey, mediaType, body, parsingHandler);
+              publicKey, mediaType, body, parsingHandler);
         }
 
         public Builder setPath(String path) {
@@ -166,7 +169,7 @@ public class ResourcesArgs {
             return this;
         }
 
-        public Builder setBody(TypedOutput body) {
+        public Builder setBody(RequestBody body) {
             this.body = body;
             return this;
         }
