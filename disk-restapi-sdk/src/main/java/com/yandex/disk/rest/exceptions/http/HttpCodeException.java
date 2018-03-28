@@ -14,11 +14,11 @@ import com.yandex.disk.rest.exceptions.ServerIOException;
 import com.yandex.disk.rest.json.ApiError;
 
 /**
- * 4xx and 5xx http codes<br/>
- * <br/>
- * Basic rules:<br/>
+ * 4xx and 5xx http codes<br>
+ * <br>
+ * Basic rules:<br>
  * Replace <tt>Error</tt> in the error name from {@link ApiError#getError()}
- * to <tt>Exception</tt> to get new exception name<br/>
+ * to <tt>Exception</tt> to get new exception name<br>
  * New exception must extends <tt>HttpCodeException</tt>
  */
 public class HttpCodeException extends ServerIOException {
